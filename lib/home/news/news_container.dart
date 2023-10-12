@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_news_c9_mon/api/api_manger.dart';
+import 'package:flutter_app_news_c9_mon/home/news/news_item.dart';
 import 'package:flutter_app_news_c9_mon/model/NewsResponse.dart';
 import 'package:flutter_app_news_c9_mon/model/SourceResponse.dart';
 
@@ -41,7 +42,7 @@ class _NewsContainerState extends State<NewsContainer> {
         }
         var newsList = snapshot.data?.articles ?? [];
         return ListView.builder(itemBuilder: (context, index) {
-          return Text(newsList[index].title??'');
+          return NewsItem(news: newsList[index]);
         },
           itemCount: newsList.length,
         );

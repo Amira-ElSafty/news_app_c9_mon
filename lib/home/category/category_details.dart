@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_news_c9_mon/api/api_manger.dart';
-import 'package:flutter_app_news_c9_mon/api/tab_container.dart';
+import 'package:flutter_app_news_c9_mon/home/tabs/tab_container.dart';
 import 'package:flutter_app_news_c9_mon/model/SourceResponse.dart';
+import 'package:flutter_app_news_c9_mon/model/category.dart';
 
 class CategoryDetails extends StatefulWidget {
   static const String routeName = 'Category-details';
+  Category category ;
+  CategoryDetails({required this.category});
 
   @override
   State<CategoryDetails> createState() => _CategoryDetailsState();
 }
 
 class _CategoryDetailsState extends State<CategoryDetails> {
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: AppBar(
-        centerTitle: true,
-        title: Text('News App',
-        style: Theme.of(context).textTheme.titleLarge,),
-    ),
-      body: FutureBuilder<SourceResponse>(
-        future: ApiManger.getSource(),
+    return  FutureBuilder<SourceResponse>(
+        future: ApiManger.getSource(widget.category.id),
           builder: (context, snapshot) {
             if(snapshot.connectionState == ConnectionState.waiting){
               return Center(
@@ -33,7 +31,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                 children: [
                   Text('Something went wrong'),
                   ElevatedButton(onPressed: (){
-                    ApiManger.getSource();
+                    ApiManger.getSource(widget.category.id);
                     setState(() {
 
                     });
@@ -49,7 +47,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
             return TabContainer(sourceList: sourcesList);
 
           }
-      ),
+
     );
   }
 }
